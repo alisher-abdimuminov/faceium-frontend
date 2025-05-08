@@ -3,6 +3,6 @@ export default function apify(path: string, type: "api" | "base" = "api") {
     if (type === "api") {
         return `${config.public.api}/${path}/`;
     } else {
-        return `${config.public.base}${path}/`;
+        return `${config.public.base}${path}`;
     }
 }
