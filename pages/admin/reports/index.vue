@@ -255,7 +255,7 @@ watch(department, (newValue) => {
                                         <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
                                         <TableCell>{{ a.attendance_access_area }}</TableCell>
                                         <TableCell>
-                                            <img :src="apify(a.image, 'base')" alt="">
+                                            <img class="w-6 h-6 rounded-md" :src="apify(a.image, 'base')" alt="">
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -304,7 +304,7 @@ watch(department, (newValue) => {
                                         <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
                                         <TableCell>{{ a.attendance_access_area }}</TableCell>
                                         <TableCell>
-                                            <img :src="apify(a.image, 'base')" alt="">
+                                            <img class="w-6 h-6 rounded-md" :src="apify(a.image, 'base')" alt="">
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
