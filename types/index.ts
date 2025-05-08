@@ -52,6 +52,7 @@ export interface IAttendance {
     attendance_output: "gone" | "failed" | "at_work"
     attendance_output_time: string
     vocation: { type: string, start: string, end: string }[]
+    image: string
 }
 
 export interface IReport {

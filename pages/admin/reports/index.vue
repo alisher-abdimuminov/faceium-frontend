@@ -163,7 +163,7 @@ watch(department, (newValue) => {
                             <span class="text-green-500">Kelganlar</span>
                         </p>
                         <div class="border rounded-md overflow-auto">
-                            <Table class="whitespace-nowrap w-[calc(100%-3rem)]">
+                            <Table class="whitespace-nowrap w-full">
                                 <TableHeader class="border-b">
                                     <TableRow>
                                         <TableHead>ID</TableHead>
@@ -173,7 +173,8 @@ watch(department, (newValue) => {
                                         <TableHead class="text-center">Vaqt</TableHead>
                                         <TableHead class="border-l text-center">Holati</TableHead>
                                         <TableHead class="border-r text-center">Vaqt</TableHead>
-                                        <TableHead>Bino</TableHead>
+                                        <TableHead class="border-r">Bino</TableHead>
+                                        <TableHead>Rasm</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -199,7 +200,10 @@ watch(department, (newValue) => {
                                             <span class="text-green-500" v-else-if="a.attendance_output === 'gone'">Ketgan</span>
                                         </TableCell>
                                         <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
-                                        <TableCell>{{ a.attendance_access_area }}</TableCell>
+                                        <TableCell class="border-l">{{ a.attendance_access_area }}</TableCell>
+                                        <TableCell>
+                                            <img class="h-6 w-6 rounded-md" :src="apify(a.image, 'base')" alt="">
+                                        </TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>

@@ -1,4 +1,8 @@
-export default function apify(path: string) {
+export default function apify(path: string, type: "api" | "base" = "api") {
     const config = useRuntimeConfig();
-    return `${config.public.api}/${path}/`;
+    if (type === "api") {
+        return `${config.public.api}/${path}/`;
+    } else {
+        return `${config.public.base}${path}/`;
+    }
 }
