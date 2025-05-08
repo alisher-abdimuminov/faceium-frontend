@@ -216,7 +216,7 @@ watch(department, (newValue) => {
                             <span class="text-orange-500">Kechikganlar</span>
                         </p>
                         <div class="border rounded-md overflow-auto">
-                            <Table class="whitespace-nowrap w-[calc(100%-3rem)]">
+                            <Table class="whitespace-nowrap w-full">
                                 <TableHeader class="border-b">
                                     <TableRow>
                                         <TableHead>ID</TableHead>
@@ -227,6 +227,7 @@ watch(department, (newValue) => {
                                         <TableHead class="border-l text-center">Holati</TableHead>
                                         <TableHead class="border-r text-center">Vaqt</TableHead>
                                         <TableHead>Bino</TableHead>
+                                        <TableHead>Rasm</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -253,6 +254,9 @@ watch(department, (newValue) => {
                                         </TableCell>
                                         <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
                                         <TableCell>{{ a.attendance_access_area }}</TableCell>
+                                        <TableCell>
+                                            <img :src="apify(a.image, 'base')" alt="">
+                                        </TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
@@ -276,6 +280,7 @@ watch(department, (newValue) => {
                                         <TableHead class="border-l text-center">Holati</TableHead>
                                         <TableHead class="border-r text-center">Vaqt</TableHead>
                                         <TableHead>Bino</TableHead>
+                                        <TableHead>Rasm</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -298,6 +303,9 @@ watch(department, (newValue) => {
                                         </TableCell>
                                         <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
                                         <TableCell>{{ a.attendance_access_area }}</TableCell>
+                                        <TableCell>
+                                            <img :src="apify(a.image, 'base')" alt="">
+                                        </TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
