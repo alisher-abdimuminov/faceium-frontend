@@ -125,7 +125,7 @@ onMounted(() => {
                                 <p class="text-orange-500" v-else-if="report[index].attendance_access === 'late'">
                                     {{ report[index].attendance_access_time }}
                                 </p>
-                                <p class="text-blue-500" v-else-if="report[index].attendance_access === 'in_vocation'">V</p>
+                                <p class="text-blue-500" v-else-if="report[index].attendance_access === 'in_vocation'">{{ report[index].vocation[0].type }}</p>
                                 <p v-else class="text-red-500">-</p>
                             </td>
                         </tr>

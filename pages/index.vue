@@ -35,10 +35,10 @@ const success = async (position: GeolocationPosition) => {
     let response = await $fetch<{ status: "success" | "error", code: string, data: object }>(apify("location"), {
         method: "POST",
         body: JSON.stringify({
-            longitude: longitude.value,
-            latitude: latitude.value,
-            // latitude: "39.671982",
-            // longitude: "66.921843",
+            // longitude: longitude.value,
+            // latitude: latitude.value,
+            latitude: "39.671982",
+            longitude: "66.921843",
         }),
         headers: {
             "Content-Type": "application/json",
@@ -75,6 +75,7 @@ const checkHandle = async () => {
         if (response.code === "200") {
             name.value = response.data;
             handleStatus.value = "success";
+            dataStore.setHandle(handle.value);
         }
     } else {
         handleStatus.value = "not_found";
