@@ -21,12 +21,12 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             // Production
-            // api: "https://api.fc.uzfi.uz/api/v1",
-            // base: "https://api.fc.uzfi.uz",
+            api: "https://api.fc.uzfi.uz/api/v1",
+            base: "https://api.fc.uzfi.uz",
 
             // Development
-            api: "http://localhost:8000/api/v1",
-            base: "http://localhost:8000",
+            // api: "http://localhost:8000/api/v1",
+            // base: "http://localhost:8000",
         }
     }
 });
