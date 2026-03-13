@@ -24,14 +24,14 @@ const date = ref({
     month: today.getMonth() + 1,
     year: today.getFullYear(),
     toString() {
-        return `${this.year}-${this.month}-${this.day}`
+        return `${this.year}-${this.month}-${this.day}`;
     }
 });
 
 
 const getAttendance = async (department: string) => {
     try {
-        let response = await $fetch<IResponse<{}, IAttendance[]>>(apify("employees/attendance")+`?day=${date.value.day}&&month=${date.value.month}&&year=${date.value.year}&&department=${department}`, {
+        let response = await $fetch<IResponse<{}, IAttendance[]>>(apify("employees/attendance") + `?day=${date.value.day}&&month=${date.value.month}&&year=${date.value.year}&&department=${department}`, {
             headers: {
                 "Authorization": `Token ${user.value?.token}`
             }
@@ -48,7 +48,7 @@ const getAttendance = async (department: string) => {
     } catch {
 
     }
-}
+};
 
 const getDepartments = async () => {
     try {
@@ -72,12 +72,12 @@ const getDepartments = async () => {
             description: "Adminga murojat qiling"
         });
     }
-}
+};
 
 const updateDate = async (value: any) => {
     date.value = value;
     getAttendance(department.value);
-}
+};
 
 
 const downloadWord = async () => {
@@ -88,12 +88,12 @@ const downloadWord = async () => {
         })
     });
     navigateTo(response.data, { external: true, open: { target: "_blank" } });
-}
+};
 
 
 let interval: string | number | NodeJS.Timeout | undefined;
 
-onMounted(async() => {
+onMounted(async () => {
     getAttendance(department.value);
     getDepartments();
     interval = setInterval(() => {
@@ -134,7 +134,8 @@ watch(department, (newValue) => {
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="0">Barcha bo'limlar</SelectItem>
-                    <SelectItem v-for="department in departments" :value="department.id">{{ department.name }}</SelectItem>
+                    <SelectItem v-for="department in departments" :value="department.id">{{ department.name }}
+                    </SelectItem>
                 </SelectContent>
             </Select>
             <Popover>
@@ -178,31 +179,51 @@ watch(department, (newValue) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow v-for="a, index in attendance.filter((v) => v.attendance_access === 'arrived')">
-                                        <TableCell>{{ index+1 }}</TableCell>
+                                    <TableRow
+                                        v-for="a, index in attendance.filter((v) => v.attendance_access === 'arrived')">
+                                        <TableCell>{{ index + 1 }}</TableCell>
                                         <TableCell>{{ a.full_name }}</TableCell>
                                         <TableCell>
-                                            <p class="w-64 truncate">{{ a.department.name }}</p>    
+                                            <p class="w-64 truncate">{{ a.department.name }}</p>
                                         </TableCell>
                                         <TableCell class="border-l text-center">
-                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">Kelgan</span>
-                                            <span v-else-if="a.attendance_access === 'failed'" class="text-orange-500">Xatolik</span>
-                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">Kech qolgan</span>
+                                            <span v-if="a.attendance_access === 'arrived'"
+                                                class="text-green-500">Kelgan</span>
+                                            <span v-else-if="a.attendance_access === 'failed'"
+                                                class="text-orange-500">Xatolik</span>
+                                            <span v-else-if="a.attendance_access === 'late'"
+                                                class="text-orange-500">Kech qolgan</span>
                                         </TableCell>
                                         <TableCell class="text-center font-semibold">
-                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">{{ a.attendance_access_time }}</span>
-                                            <span v-else-if="a.attendance_access === 'failed'" class="text-orange-500">{{ a.attendance_access_time }}</span>
-                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">{{ a.attendance_access_time }}</span>
+                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">{{
+                                                a.attendance_access_time }}</span>
+                                            <span v-else-if="a.attendance_access === 'failed'"
+                                                class="text-orange-500">{{ a.attendance_access_time }}</span>
+                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">{{
+                                                a.attendance_access_time }}</span>
                                         </TableCell>
                                         <TableCell class="border-l text-center">
-                                            <span class="text-green-500" v-if="a.attendance_output === 'at_work'">Ishda</span>
-                                            <span class="text-orange-500" v-else-if="a.attendance_output === 'failed'">Xatolik</span>
-                                            <span class="text-green-500" v-else-if="a.attendance_output === 'gone'">Ketgan</span>
+                                            <span class="text-green-500"
+                                                v-if="a.attendance_output === 'at_work'">Ishda</span>
+                                            <span class="text-orange-500"
+                                                v-else-if="a.attendance_output === 'failed'">Xatolik</span>
+                                            <span class="text-green-500"
+                                                v-else-if="a.attendance_output === 'gone'">Ketgan</span>
                                         </TableCell>
-                                        <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
+                                        <TableCell class="border-r text-center">{{ a.attendance_output_time }}
+                                        </TableCell>
                                         <TableCell class="border-l">{{ a.attendance_access_area }}</TableCell>
                                         <TableCell>
-                                            <img class="h-6 w-6 rounded-md" :src="apify(a.image, 'base')" alt="">
+                                            <HoverCard>
+                                                <HoverCardTrigger>
+                                                    <img class="h-6 w-6 rounded-md" :src="apify(a.image, 'base')"
+                                                        alt="">
+                                                </HoverCardTrigger>
+                                                <HoverCardContent>
+                                                    <img class="h-64 w-64 rounded-md" :src="apify(a.image, 'base')"
+                                                        alt="">
+                                                </HoverCardContent>
+                                            </HoverCard>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -231,31 +252,51 @@ watch(department, (newValue) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow v-for="a, index in attendance.filter((v) => v.attendance_access === 'late')">
-                                        <TableCell>{{ index+1 }}</TableCell>
+                                    <TableRow
+                                        v-for="a, index in attendance.filter((v) => v.attendance_access === 'late')">
+                                        <TableCell>{{ index + 1 }}</TableCell>
                                         <TableCell>{{ a.full_name }}</TableCell>
                                         <TableCell>
-                                            <p class="w-64 truncate">{{ a.department.name }}</p>    
+                                            <p class="w-64 truncate">{{ a.department.name }}</p>
                                         </TableCell>
                                         <TableCell class="border-l text-center">
-                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">Kelgan</span>
-                                            <span v-else-if="a.attendance_access === 'failed'" class="text-orange-500">Xatolik</span>
-                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">Kech qolgan</span>
+                                            <span v-if="a.attendance_access === 'arrived'"
+                                                class="text-green-500">Kelgan</span>
+                                            <span v-else-if="a.attendance_access === 'failed'"
+                                                class="text-orange-500">Xatolik</span>
+                                            <span v-else-if="a.attendance_access === 'late'"
+                                                class="text-orange-500">Kech qolgan</span>
                                         </TableCell>
                                         <TableCell class="text-center font-semibold">
-                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">{{ a.attendance_access_time }}</span>
-                                            <span v-else-if="a.attendance_access === 'failed'" class="text-orange-500">{{ a.attendance_access_time }}</span>
-                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">{{ a.attendance_access_time }}</span>
+                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">{{
+                                                a.attendance_access_time }}</span>
+                                            <span v-else-if="a.attendance_access === 'failed'"
+                                                class="text-orange-500">{{ a.attendance_access_time }}</span>
+                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">{{
+                                                a.attendance_access_time }}</span>
                                         </TableCell>
                                         <TableCell class="border-l text-center">
-                                            <span class="text-green-500" v-if="a.attendance_output === 'at_work'">Ishda</span>
-                                            <span class="text-orange-500" v-else-if="a.attendance_output === 'failed'">Xatolik</span>
-                                            <span class="text-green-500" v-else-if="a.attendance_output === 'gone'">Ketgan</span>
+                                            <span class="text-green-500"
+                                                v-if="a.attendance_output === 'at_work'">Ishda</span>
+                                            <span class="text-orange-500"
+                                                v-else-if="a.attendance_output === 'failed'">Xatolik</span>
+                                            <span class="text-green-500"
+                                                v-else-if="a.attendance_output === 'gone'">Ketgan</span>
                                         </TableCell>
-                                        <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
+                                        <TableCell class="border-r text-center">{{ a.attendance_output_time }}
+                                        </TableCell>
                                         <TableCell>{{ a.attendance_access_area }}</TableCell>
                                         <TableCell>
-                                            <img class="w-6 h-6 rounded-md" :src="apify(a.image, 'base')" alt="">
+                                            <HoverCard>
+                                                <HoverCardTrigger>
+                                                    <img class="h-6 w-6 rounded-md" :src="apify(a.image, 'base')"
+                                                        alt="">
+                                                </HoverCardTrigger>
+                                                <HoverCardContent>
+                                                    <img class="h-64 w-64 rounded-md" :src="apify(a.image, 'base')"
+                                                        alt="">
+                                                </HoverCardContent>
+                                            </HoverCard>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -284,27 +325,41 @@ watch(department, (newValue) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow v-for="a, index in attendance.filter((v) => v.attendance_access === 'failed')">
-                                        <TableCell>{{ index+1 }}</TableCell>
+                                    <TableRow
+                                        v-for="a, index in attendance.filter((v) => v.attendance_access === 'failed')">
+                                        <TableCell>{{ index + 1 }}</TableCell>
                                         <TableCell>{{ a.full_name }}</TableCell>
                                         <TableCell>
-                                            <p class="w-64 truncate">{{ a.department.name }}</p>    
+                                            <p class="w-64 truncate">{{ a.department.name }}</p>
                                         </TableCell>
                                         <TableCell class="border-l text-center">
                                             <span class="text-orange-500">Xatolik</span>
                                         </TableCell>
                                         <TableCell class="text-center font-semibold">
-                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">{{ a.attendance_access_time }}</span>
-                                            <span v-else-if="a.attendance_access === 'failed'" class="text-orange-500">{{ a.attendance_access_time }}</span>
-                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">{{ a.attendance_access_time }}</span>
+                                            <span v-if="a.attendance_access === 'arrived'" class="text-green-500">{{
+                                                a.attendance_access_time }}</span>
+                                            <span v-else-if="a.attendance_access === 'failed'"
+                                                class="text-orange-500">{{ a.attendance_access_time }}</span>
+                                            <span v-else-if="a.attendance_access === 'late'" class="text-orange-500">{{
+                                                a.attendance_access_time }}</span>
                                         </TableCell>
                                         <TableCell class="border-l text-center">
                                             <span class="text-orange-500">Xatolik</span>
                                         </TableCell>
-                                        <TableCell class="border-r text-center">{{ a.attendance_output_time }}</TableCell>
+                                        <TableCell class="border-r text-center">{{ a.attendance_output_time }}
+                                        </TableCell>
                                         <TableCell>{{ a.attendance_access_area }}</TableCell>
                                         <TableCell>
-                                            <img class="w-6 h-6 rounded-md" :src="apify(a.image, 'base')" alt="">
+                                            <HoverCard>
+                                                <HoverCardTrigger>
+                                                    <img class="h-6 w-6 rounded-md" :src="apify(a.image, 'base')"
+                                                        alt="">
+                                                </HoverCardTrigger>
+                                                <HoverCardContent>
+                                                    <img class="h-64 w-64 rounded-md" :src="apify(a.image, 'base')"
+                                                        alt="">
+                                                </HoverCardContent>
+                                            </HoverCard>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
@@ -326,7 +381,8 @@ watch(department, (newValue) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow v-for="a in attendance.filter((v) => v.attendance_access === 'did_not_come')">
+                                    <TableRow
+                                        v-for="a in attendance.filter((v) => v.attendance_access === 'did_not_come')">
                                         <TableCell>{{ a.full_name }}</TableCell>
                                         <TableCell>{{ a.department ? a.department.name : "" }}</TableCell>
                                         <TableCell>Kelmagan</TableCell>
@@ -349,12 +405,14 @@ watch(department, (newValue) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow v-for="a in attendance.filter((v) => v.attendance_access === 'in_vocation')">
+                                    <TableRow
+                                        v-for="a in attendance.filter((v) => v.attendance_access === 'in_vocation')">
                                         <TableCell>{{ a.full_name }}</TableCell>
                                         <TableCell>{{ a.department ? a.department.name : "" }}</TableCell>
                                         <TableCell>
                                             <div v-for="v in a.vocation">
-                                                <span>{{ v.type }}</span> - <span class="text-green-500">{{ v.start }}</span> : <span class="text-red-500">{{ v.end }}</span>
+                                                <span>{{ v.type }}</span> - <span class="text-green-500">{{ v.start
+                                                    }}</span> : <span class="text-red-500">{{ v.end }}</span>
                                             </div>
                                         </TableCell>
                                     </TableRow>

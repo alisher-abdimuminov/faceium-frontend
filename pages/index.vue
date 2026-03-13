@@ -18,7 +18,7 @@ const { handle } = storeToRefs(dataStore);
 const latitude = ref(0);
 const longitude = ref(0);
 const isLoading = ref(true);
-const state = ref<"location" | "handle" | "faceid">("location");
+const state = ref<"location" | "terms" | "handle" | "faceid">("location");
 
 
 
@@ -32,13 +32,13 @@ const success = async (position: GeolocationPosition) => {
     isLoading.value = true;
     longitude.value = position.coords.longitude;
     latitude.value = position.coords.latitude;
-    let response = await $fetch<{ status: "success" | "error", code: string, data: object }>(apify("location"), {
+    let response = await $fetch<{ status: "success" | "error", code: string, data: object; }>(apify("location"), {
         method: "POST",
         body: JSON.stringify({
             longitude: longitude.value,
             latitude: latitude.value,
-            // latitude: "39.671982",
-            // longitude: "66.921843",
+            // latitude: "39.658603",
+            // longitude: "66.914105",
         }),
         headers: {
             "Content-Type": "application/json",
@@ -52,16 +52,16 @@ const success = async (position: GeolocationPosition) => {
         locationStatus.value = 'not_in_area';
     }
     isLoading.value = false;
-}
+};
 
 const error = (err: GeolocationPositionError) => {
     locationStatus.value = "cannot_get";
     isLoading.value = false;
-}
+};
 
 const checkHandle = async () => {
     isLoading.value = true;
-    let response = await $fetch<{ status: "success" | "error", code: string, data: string }>(apify("handle"), {
+    let response = await $fetch<{ status: "success" | "error", code: string, data: string; }>(apify("handle"), {
         method: "POST",
         body: JSON.stringify({
             handle: handle.value
@@ -81,7 +81,7 @@ const checkHandle = async () => {
         handleStatus.value = "not_found";
     }
     isLoading.value = false;
-}
+};
 
 onMounted(() => {
     navigator.geolocation.getCurrentPosition(success, error);
@@ -102,7 +102,7 @@ onMounted(() => {
                 <div :class="{ 'border-green-500 text-green-500': handleStatus === 'success', 'border-red-500 text-red-500': handleStatus === 'not_found' }"
                     class="w-12 h-12 flex items-center justify-center rounded-full border">
                     <LucideLoader v-if="isLoading && state === 'handle'" class="animate-spin duration-1000" />
-                    <LucideLock :size="20" />
+                    <LucideLock v-else :size="20" />
                 </div>
                 <Separator orientation="vertical" class="h-10" />
                 <div class="w-12 h-12 flex items-center justify-center rounded-full border">
@@ -137,7 +137,8 @@ onMounted(() => {
                             (Joylashuvingizni tekshirib koring)</span>
                     </AlertDescription>
                 </Alert>
-                <Button @click="state = 'handle'" v-if="locationStatus === 'success'">Davom etish
+                <Button @click="() => { state = 'terms'; isLoading = true; }" v-if="locationStatus === 'success'">Davom
+                    etish
                     <LucideArrowRight />
                 </Button>
             </div>

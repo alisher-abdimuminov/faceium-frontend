@@ -87,13 +87,13 @@ const deleteArea = async (area: IArea) => {
     <div class="grid gap-3 p-5 md:p-10">
         <Breadcrumb>
             <BreadcrumbList>
-                <BreadcrumbItem>
-                    <BreadcrumbLink>
+                <BreadcrumbItem as-child>
+                    <BreadcrumbLink as-child>
                         <NuxtLink :to="{ name: 'admin' }">Bosh sahifa</NuxtLink>
                     </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem>
+                <BreadcrumbItem as-child>
                     <BreadcrumbPage>
                         Hududlar
                     </BreadcrumbPage>
@@ -104,7 +104,7 @@ const deleteArea = async (area: IArea) => {
             <div></div>
             <div>
                 <Dialog v-model:open="areaDialog">
-                    <DialogTrigger>
+                    <DialogTrigger as-child>
                         <Button size="sm" variant="ghost">
                             <LucideListPlus :size="16" />
                             <span>Qo'shish</span>
@@ -157,10 +157,12 @@ const deleteArea = async (area: IArea) => {
         <div class="w-full border rounded-md overflow-x-auto">
             <Table class="whitespace-nowrap overflow-x-auto">
                 <TableHeader class="border-b">
-                    <TableHead class="w-4">#</TableHead>
-                    <TableHead>Hudud nomi</TableHead>
-                    <TableHead>Joylashuvlar</TableHead>
-                    <TableHead>O'chirish</TableHead>
+                    <TableRow>
+                        <TableHead class="w-4">#</TableHead>
+                        <TableHead>Hudud nomi</TableHead>
+                        <TableHead>Joylashuvlar</TableHead>
+                        <TableHead>O'chirish</TableHead>
+                    </TableRow>
                 </TableHeader>
                 <TableBody>
                     <TableRow v-for="area, index in areas">
