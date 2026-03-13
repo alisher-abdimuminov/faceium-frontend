@@ -18,7 +18,7 @@ const { handle } = storeToRefs(dataStore);
 const latitude = ref(0);
 const longitude = ref(0);
 const isLoading = ref(true);
-const state = ref<"location" | "terms" | "handle" | "faceid">("location");
+const state = ref<"location" | "handle" | "faceid">("location");
 
 
 
@@ -137,11 +137,12 @@ onMounted(() => {
                             (Joylashuvingizni tekshirib koring)</span>
                     </AlertDescription>
                 </Alert>
-                <Button @click="() => { state = 'terms'; isLoading = true; }" v-if="locationStatus === 'success'">Davom
+                <Button @click="() => { state = 'handle'; isLoading = true; }" v-if="locationStatus === 'success'">Davom
                     etish
                     <LucideArrowRight />
                 </Button>
             </div>
+
             <div v-if="state === 'handle'" class="w-full grid gap-3">
                 <Label>ID</Label>
                 <Input v-model="handle" />
